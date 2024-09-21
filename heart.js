@@ -4,10 +4,17 @@ function Heart() {
   this.speed = .3;
   this.xspeed = 0;
   this.yspeed = 0;
+  this.alive = true;
 
   this.start = function(){
     this.x = w / 2 + heartScale;
     this.y = h / 2 + heartScale;
+  }
+
+  this.death = function(){
+    console.log("BAAAAAAAAAAAAAAM ");
+    this.alive = false;
+    delete this;
   }
 
   this.dir = function(direction) {
@@ -29,8 +36,8 @@ function Heart() {
     this.y = constrain(this.y, topy + 7 * heartScale, bottomy - 3 * heartScale);
 
     beams.forEach(beam => {
-      if (beam.horizontal && beam.beamed && (dist(this.x, this.y, this.x, beam.y) < scl || dist(this.x, this.y, beam.x, this.y) < scl)){
-        console.log("BAAAAAAAAAAAAAAM ");
+      if (beam.beamed && (dist(this.x, this.y, this.x, beam.y) < 1.5 * scl || dist(this.x, this.y, beam.x, this.y) < 2 * scl)){
+        this.death();
       } 
     })
   }
